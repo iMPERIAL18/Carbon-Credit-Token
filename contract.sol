@@ -9,10 +9,22 @@ contract CarbonCreditToken is ERC20, ERC20Burnable, Ownable {
     constructor(
         address initialOwner
     ) ERC20("CarbonCreditToken", "CCT") Ownable(initialOwner) {
-        _mint(msg.sender, 10000);
+        _mint(msg.sender, 10000 * 10 ** decimals());
     }
 
-    function mint(address to, uint256 amount) public onlyOwner {
-        _mint(to, amount);
+    function decimals() public pure override returns (uint8) {
+        return 0;
+    }
+
+    function mint(address to, uint256 _amount) public onlyOwner {
+        _mint(to, _amount);
+    }
+
+    function burnToken(uint256 _amount) public {
+        _burn(msg.sender, _amount);
+    }
+
+    function transferToken(address _recipient, uint256 _amount) public {
+        _transfer(msg.sender, _recipient, _amount);
     }
 }
